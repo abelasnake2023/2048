@@ -322,7 +322,7 @@ let startY;
 let endX;
 let endY;
 document.addEventListener('touchstart', (event) => {
-    if(event.target.tagName === 'button') {
+    if(event.target.tagName === 'BUTTON') {
         return;
     }
     
@@ -333,7 +333,7 @@ document.addEventListener('touchstart', (event) => {
 });
 
 document.addEventListener('touchmove', (event) => {
-    if(event.target.tagName === 'button') {
+    if(event.target.tagName === 'BUTTON') {
         return;
     }
 
@@ -341,7 +341,7 @@ document.addEventListener('touchmove', (event) => {
 });
 
 document.addEventListener('touchend', (event) => {
-    if(event.target.tagName === 'button') {
+    if(event.target.tagName === 'BUTTON') {
         return;
     }
 
