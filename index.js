@@ -68,6 +68,9 @@ function updateBoard() {
     }
     document.getElementById('score').textContent = `Score: ${score}`; // update score
     document.getElementById('high-score').textContent = `High Score: ${highScore}`; // update high score => to be modified when we learn php
+    // play sound effect when the tile moves:
+    let audioElement = document.getElementById('myAudio');
+    audioElement.play();
 }
 
 
