@@ -4,7 +4,7 @@ let score = 0; // current score
 let highScore = 0; // high score
 let previousState = []; // previousState for undo purpose.
 let gameOver = false; // boolean to check game over
-let undoScore;
+let undoScore; // previous score is kept in order to go back if undo is clicked.
 
 
 
@@ -68,8 +68,10 @@ function updateBoard() {
     }
     document.getElementById('score').textContent = `Score: ${score}`; // update score
     document.getElementById('high-score').textContent = `High Score: ${highScore}`; // update high score => to be modified when we learn php
+
     // play sound effect when the tile moves:
     let audioElement = document.getElementById('myAudio');
+    audioElement.playbackRate = 2;
     audioElement.play();
 }
 
@@ -77,14 +79,14 @@ function updateBoard() {
 
 /* Animate Tile */
 function animateTile(tileElement) {
-    // Tile Element 
+    // Tile Element animation
     tileElement.animate({
             boxShadow: '4px 4px 4px 4px #8f8c8c'
-        }, 1000, "linear");
+        }, 500, "linear");
     
     tileElement.animate({
             boxShadow: '0px 0px 0px 0px #8f8c8c'
-        }, 1000, "linear");
+        }, 500, "linear");
 }
 
 
@@ -95,6 +97,7 @@ function animateTile(tileElement) {
 function moveTiles(direction) {
     undoScore = 0;
     previousState = board.map(row => [...row]); // Store the previous state for undo functionality
+    moved = false; // check if the board is updated by the user action(user try to move the tile)
     
     // updating board[i][j]...
     for (let i = 0; i < boardSize; i++) {
@@ -122,7 +125,10 @@ function moveTiles(direction) {
     
             // updating board[i][j] according to `rowOrColAdjAdded`
             for (let j = 0; j < board[i].length; j++) {
-                board[i][j] = rowOrColAdjAdded[j];
+                if(board[i][j] != rowOrColAdjAdded[j]) { // check if the board is updated by the movement.
+                    moved = true; // movement made!
+                }
+                board[i][j] = rowOrColAdjAdded[j]; // updating the board
             }
         } 
         else if (direction == "left") { // start adding from left to right or from low index to high index
@@ -142,6 +148,9 @@ function moveTiles(direction) {
             }
     
             for (let j = 0; j < board[i].length; j++) {
+                if(board[i][j] != rowOrColAdjAdded[j]) {
+                    moved = true;
+                }
                 board[i][j] = rowOrColAdjAdded[j];
             }
         } 
@@ -167,6 +176,9 @@ function moveTiles(direction) {
             }
     
             for (let j = 0; j < boardSize; j++) {
+                if(board[j][i] != rowOrColAdjAdded[j]) {
+                    moved = true;
+                }
                 board[j][i] = rowOrColAdjAdded[j];
             }
         } 
@@ -191,18 +203,24 @@ function moveTiles(direction) {
             }
     
             for (let j = 0; j < boardSize; j++) {
+                if(board[j][i] != rowOrColAdjAdded[j]) { 
+                    moved = true;
+                }
                 board[j][i] = rowOrColAdjAdded[j];
             }
         }
     }
-    
-    generateRandomTile(); // Continue the game by generating a random num(2 or 4) in a random board position.
+
+    if(moved) {
+        generateRandomTile(); // Continue the game by generating a random num(2 or 4) in a random board position.
+        updateBoard(); // update the UI => HTML.
+    }
+
     checkGameOver(); // Check game over condition
 
     if (score > highScore) { // this line will be done correctly, when we finish Server side scripting in php.
         highScore = score;
     }
-    updateBoard(); // update the UI => HTML.
 }
 
 
@@ -245,7 +263,6 @@ function undo() {
         score -= undoScore;
         undoScore = 0;
         updateBoard(); // update board to refelect the undo effect.
-        checkGameOver(); // this is useful if undo is clicked after game over => to give the player a big chance.
     }
 }
 
@@ -287,7 +304,7 @@ document.addEventListener('keydown', (event) => {
 
 
 
-newGame(); // consist code to start the new Game.
+newGame(); // consist code to start the new Game. Consider it as method inside a main function
 
 
 
@@ -299,13 +316,13 @@ newGameElement.addEventListener('click', newGame);
 
 
 
-// Touch event listeners
+// Touch event listeners for Mobile Device
 let startX;
 let startY;
 let endX;
 let endY;
 document.addEventListener('touchstart', (event) => {
-    if(event.target.tagName === 'BUTTON') {
+    if(event.target.tagName === 'button') {
         return;
     }
     
@@ -316,7 +333,7 @@ document.addEventListener('touchstart', (event) => {
 });
 
 document.addEventListener('touchmove', (event) => {
-    if(event.target.tagName === 'BUTTON') {
+    if(event.target.tagName === 'button') {
         return;
     }
 
@@ -324,7 +341,7 @@ document.addEventListener('touchmove', (event) => {
 });
 
 document.addEventListener('touchend', (event) => {
-    if(event.target.tagName === 'BUTTON') {
+    if(event.target.tagName === 'button') {
         return;
     }
 
