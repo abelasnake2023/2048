@@ -1,0 +1,162 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #424242;
+}
+
+#game-container {
+    width: 400px;
+    text-align: center;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#score-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: bold;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* no need for grid-template-rows */
+    gap: 10px;
+    background-color: #3d3737;
+    box-shadow: 4px 1px 1px 1px #8f8c8c;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+
+
+
+/* common styling for all the tile and empty tile depend only on this class selector */
+.tile {
+    width: 80px;
+    height: 80px;
+    display: flex; /* to make the tile number in the center */
+    justify-content: center; /* to make the tile number in the center */
+    align-items: center; /* to make the tile number in the center */
+    font-size: 24px; /* font size for all the tile type */
+    color: #f9f6f2; /* font color for all the tile type */
+    background-color: #020101; /* default color for all the tile. */
+    opacity: 0.3;
+    border-radius: 5px;
+}
+/* styling the tile as it goes higher and higher */
+.tile-2 { 
+    background-color: #584c3f; 
+    opacity: 1;
+}
+.tile-4 { 
+    background-color: #584c3f;  
+    opacity: 1;
+}
+.tile-8 { 
+    background-color: #8a613d; 
+    opacity: 1;
+}
+.tile-16 { 
+    background-color: #8a613d;
+    opacity: 1;
+}
+.tile-32 { 
+    background-color: #535150; 
+    opacity: 1;
+}
+.tile-64 { 
+    background-color: #535150; 
+    opacity: 1;
+}
+.tile-128 { 
+    background-color: #535150; 
+    opacity: 1;
+}
+.tile-256 { 
+    background-color: #535150; 
+    opacity: 1;
+}
+.tile-512 { 
+    background-color: #ad7467; 
+    opacity: 1;
+}
+.tile-1024 { 
+    background-color: #ad7467;
+    opacity: 1;
+}
+.tile-2048 { 
+    background-color: #ad7467;
+    opacity: 1;
+}
+
+
+
+
+
+/* Buttons => New Game and Undo */
+#controls button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #8f7a66;
+    color: white;
+    border-radius: 5px;
+}
+/* when the button being hovered */
+#controls button:hover {
+    background-color: #9f8b76;
+}
+
+
+
+
+
+/* For Mobile Phone */
+@media (max-width: 500px) {
+    #game-container {
+        width: 90%;
+    }
+
+    #header {
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    #score-container {
+        width: 100%;
+        justify-content: space-around;
+        font-size: 14px;
+    }
+
+    #board {
+        gap: 3px;
+        padding: 10px;
+        width: 95%;
+        box-shadow: 0px 0px 0px 0px #8f8c8c;
+    }
+
+    .tile {
+        width: 70px;
+        height: 60px;
+        font-size: 18px;
+    }
+
+    #controls button {
+        margin: 3px;
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
